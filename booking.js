@@ -49,16 +49,25 @@ function showOutput(details){
     const parentNode = document.getElementById('display');
     const childHTML = `<li id=${details._id}> ${details.fname} - ${details.eid}
     <button onclick = remove('${details._id}')>Delete </button>
-    <button onclick = editUser('${details.eid}','${details.fname}','${details.no}')> Edit </button></li>`
+    <button onclick = editUser('${details._id}','${details.eid}','${details.fname}','${details.no}')> Edit </button></li>`
     parentNode.innerHTML = parentNode.innerHTML+childHTML;    
     
 }
-function editUser(eid,name,phone){
-    document.getElementById('email').value = eid;
-    document.getElementById('name').value = name;
-    document.getElementById('phone').value = phone;
+function editUser(id,eid,name,phone){
+    if(id){
+    axios.get(`https://crudcrud.com/api/61a17ba250e8446eb17b88b76fb0dc38/appointments/${id}`)
+    .then(response =>{
+        document.getElementById('email').value = eid;
+        document.getElementById('name').value = name;
+        document.getElementById('phone').value = phone;
 
-    remove(eid);
+        remove(eid);
+        
+    }).catch(error =>{
+        console.error(error);
+    })
+    
+    }
 }
 function remove(e) {
     axios.get(`https://crudcrud.com/api/61a17ba250e8446eb17b88b76fb0dc38/appointments/${e}`)
