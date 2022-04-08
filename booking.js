@@ -19,18 +19,24 @@ function addItem(){
     })
     showOutput(details);
 }
+window.addEventListener("DOMContentLoaded", ()=>{
+    axios.get('https://crudcrud.com/api/61a17ba250e8446eb17b88b76fb0dc38/appointments',{
+        details
+    }).then(response =>{
+        console.log(response);
+    }).catch(error =>{
+        console.error(error);
+    })
+    const localStorageobj = localStorage;
+    const localStoragekeys = Object.keys(localStorageobj);
+    for(var i=0;i<localStoragekeys.length;i++)
+    {
+        const key = localStoragekeys[i];
+        const userDetailString = localStorageobj[key];
+        const userDetailObj = JSON.parse(userDetailString);
+        showOutput(userDetailObj);
+    }
+})
 function showOutput(details){
-    document.getElementById('display').innerHTML = 
-    `<h4>Bookings</h4>
-    <table>
-    <tr>
-    <th>Name</th>
-    <th>E-mail</th>
-    <th>Phone</th>
-    </tr>
-    <tr>
-    <td>${JSON.stringify(details.fname)} </td>
-    <td>${JSON.stringify(details.eid)} </td>
-    <td>${JSON.stringify(details.no)} </td>
-    </tr>`
+    
 }
